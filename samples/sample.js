@@ -10,8 +10,7 @@ var config       = require(path.resolve(__dirname, '../node_modules/linda/bin/li
 var package_json = require(path.resolve(__dirname, '../node_modules/linda/package.json'));
 process.env.PORT = 8931;
 
-// express modules
-var bodyParser   = require('body-parser');
+// socket.io modules
 var authenticator = require('../dist/index');
 
 // server setup
@@ -20,8 +19,9 @@ module.exports = app;
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-// io.use(authenticator.fromFile(path.resolve(__dirname, 'tokens.json')));
-io.use(authenticator.fromEnv());
+// io.use(authenticator.fromJsonFile(path.resolve(__dirname, 'tokens.json')));
+// io.use(authenticator.fromEnv());
+io.use(authenticator.fromObject({"zanmai" : 'kazusuke'));
 var linda = require(path.resolve(__dirname, '../node_modules/linda')).Server.listen({io: io, server: http});
 app.set('socket.io', io);
 app.set('config', config);
@@ -37,24 +37,11 @@ http.listen(process.env.PORT, function(){
 
   var Linda = require('linda');
   var io = require('socket.io-client');
-  var path = 'http://localhost:' + process.env.PORT + '/baba?id=baba';
-
-  var socket1 = io.connect(path + '&token=kazusuke',{'forceNew': true });
-  var client1 = new Linda.Client().connect(socket1);
+  var path = 'http://localhost:' + process.env.PORT;
+  var query = '?id=zanmai&token=kazusuke'
   var tuple = {a : 'b', c : 'd'};
-  var baba1 = client1.tuplespace('baba');
-  baba1.take(tuple, function(err, tuple){
-    // success
-    console.log('token is valid');
-  });
-  baba1.write(tuple);
 
-  var socket2 = io.connect(path + '&token=zanmai',{'forceNew': true });
-  var client2 = new Linda.Client().connect(socket2);
-  var baba2 = client2.tuplespace('baba');
-  baba2.take(tuple, function(err, tuple){
-    // failure
-    console.log('token is not valid');
-  });
-  baba2.write(tuple);
+  var socket1 = io.connect(path + query,{'forceNew': true});
+  var client1 = new Linda.Client().connect(socket1);
+  var kazudon = client1.tuplespace('kazudon');
 });
