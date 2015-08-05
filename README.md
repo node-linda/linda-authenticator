@@ -40,4 +40,4 @@ var client = new Linda.Client().connect(socket);
 
 ## TODO
 
-test
+- test
