@@ -19,9 +19,9 @@ var authenticator = require('linda-socket.io-authenticator')
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-io.use(authenticator.fromEnv())
+// io.use(authenticator.fromEnv())
 // io.use(authenticator.fromJsonFile(path.resolve(__dirname, 'tokens.json')));
-// io.use(authenticator.fromObject({"*" : 'kazusuke'}));
+io.use(authenticator.fromObject({"*" : 'kazusuke'}));
 var linda = require(path.resolve(__dirname, '../node_modules/linda')).Server.listen({io: io, server: http});
 
 ```
@@ -31,7 +31,9 @@ var linda = require(path.resolve(__dirname, '../node_modules/linda')).Server.lis
 ``` javascript
 
 var path  = 'https://' + linda_host;
-var query = '&id=YOUR_ID&token=YOUR_TOKEN';
+var query = '&id=YOUR_ID&token=kazusuke';
+// if id is *
+// var query = '&token=kazusuke';
 var socket = io.connect(path + query);
 var client = new Linda.Client().connect(socket);
 
