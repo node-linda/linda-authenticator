@@ -1,7 +1,7 @@
 {
-  "name": "linda-socket.io-authenticator",
-  "version": "0.1.0",
-  "description": "Authenticator for linda with socket.io",
+  "name": "linda-authenticator",
+  "version": "0.2.0",
+  "description": "Authenticator for linda",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
