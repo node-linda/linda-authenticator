@@ -19,7 +19,7 @@ module.exports = app;
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-io.use(authenticator.socketIOAuthenticator.fromJsonFile(path.resolve(__dirname, 'tokens.json')));
+// io.use(authenticator.socketIOAuthenticator.fromJsonFile(path.resolve(__dirname, 'tokens.json')));
 // io.use(authenticator.socketIOAuthenticator.fromEnv());
 // io.use(authenticator.socketIOAuthenticator.fromObject({hoge : 'fuga'}))
 var linda = require(path.resolve(__dirname, '../node_modules/linda')).Server
@@ -51,7 +51,7 @@ http.listen(process.env.PORT, function(){
   var client1 = new Linda.Client().connect(socket1);
   var kazudon = client1.tuplespace('kazudon').option({password: 'fuga'});
   kazudon.take(tuple, function(err, data){
-    console.log('valid tuplespace');
+    console.log('valid');
   });
   setTimeout(function(){
     kazudon.write(tuple)
