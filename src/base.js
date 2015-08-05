@@ -1,6 +1,9 @@
 'use strict';
+const fromObject = require('./object');
+const fromEnv = require('./env');
+const fromJsonFile = require('./file');
 
-const authFunc = (tokens)=> {
+const socketIOAuthFunc = (tokens)=> {
   return (socket, next)=> {
     const id = socket.handshake.query.id;
     const token = socket.handshake.query.token;
@@ -16,10 +19,32 @@ const authFunc = (tokens)=> {
     }
   }
 }
-
-const fromObject = (tokens)=> {
-  return authFunc(tokens);
+const tsAuthFunc = (info) => {
+  return (data)=> {
+    const password = data.options.password;
+    const space = data.tuplespace;
+    if (info[space] === password) {
+      return true;
+    } else if(info['*'] && info['*'] === password) {
+      return true;
+    } else {
+      return false;
+    }  
+  }    
 }
 
-exports.authFunc = authFunc;
-exports.fromObject = fromObject;
+const tuplespaceAuthenticator = {
+  fromJsonFile : fromJsonFile.bind({func: tsAuthFunc}),
+  fromObject   : fromObject.bind({func: tsAuthFunc}),
+  fromEnv      : fromEnv.bind({func: tsAuthFunc})
+}
+
+const socketIOAuthenticator = {
+  fromJsonFile : fromJsonFile.bind({func: socketIOAuthFunc}),
+  fromObject   : fromObject.bind({func: socketIOAuthFunc}),
+  fromEnv      : fromEnv.bind({func: socketIOAuthFunc})
+}
+
+
+exports.socketIOAuthenticator = socketIOAuthenticator;
+exports.tuplespaceAuthenticator = tuplespaceAuthenticator;

@@ -1,8 +1,8 @@
 'use strict';
 
-const fromJsonFile = (filepath)=> {
+const fromJsonFile = function(filepath, func) {
   const tokens = JSON.parse(require('fs').readFileSync(filepath));
-  return require('./base').authFunc(tokens);
+  return this.func(tokens);
 }
 
 export default fromJsonFile;

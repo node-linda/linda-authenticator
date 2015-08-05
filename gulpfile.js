@@ -8,7 +8,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 
 var entry = 'index.js';
-var src = [ entry, 'src/**/*.js' ];
+var src = [ entry, './src/**/*.js' ];
 var srcOption = { base: './' };
 var dest = './dist';
 

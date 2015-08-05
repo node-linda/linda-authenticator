@@ -2,7 +2,7 @@
 
 import _ from 'underscore';
 
-const fromEnv = ()=> {
+const fromEnv = function(func) {
   const keys = Object.keys(process.env);
   let tokens = {};
   _.each(keys, function(key){
@@ -14,7 +14,7 @@ const fromEnv = ()=> {
       tokens[k] = process.env[key];
     }
   });
-  return require('./base').authFunc(tokens);
+  return this.func(tokens);
 };
 
 export default fromEnv;
