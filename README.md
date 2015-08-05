@@ -2,11 +2,16 @@
 
 Authentication mechanism for NodeLinda
 
+Now, available module is as below
+
+- Socket.IO Based
+- Tuplespace Based
+
 ## Install
 
 ``` shell
 
-npm install linda-socket.io-authenticator --save
+npm install linda-authenticator --save
 
 ```
 
