@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your/repository.git"
+    "url": "https://github.com/node-linda/socket.io-authenticator.git"
   },
   "dependencies": {
     "linda": "^1.2.1",
